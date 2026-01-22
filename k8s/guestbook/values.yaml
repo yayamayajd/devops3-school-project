@@ -3,7 +3,7 @@ namespace: jiadai-dev
 backend:
   name: backend
   replicas: 2
-  image:
+  image: ghcr.io/yayamayajd/guestbook-api:sha256-14d2a2703a9f77d49f7bb94d15e7428e574616dab4714a35f3bc14e1e695fd85
   containerPort: 8080
 
   svcname: backend
@@ -16,7 +16,7 @@ backend:
 frontend: 
   name: frontend
   replicas: 2
-  image:
+  image: ghcr.io/yayamayajd/guestbook-web:sha256-04e7253de8a52531bd280b971b1fb8b946db2d1742bcea666a0de457b866bad1
   containerPort: 8080
 
   svcname: frontend
