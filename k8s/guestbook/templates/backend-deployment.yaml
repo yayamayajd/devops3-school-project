@@ -46,10 +46,16 @@ spec:
           livenessProbe:
             httpGet:
               path: {{ .Values.backend.livenessProbe.path }}                         #/health
-              port: {{ .Values.backend.livenessProbe.port }}                        # 8080
-            initialDelaySeconds: {{ .Values.backend.livenessProbe.initialDelaySeconds }}              #30
-            periodSeconds:   {{ .Values.backend.livenessProbe.periodSeconds }}                #10
-   
+              port: {{ .Values.backend.containerPort }}                        # 8080
+            initialDelaySeconds: {{ .Values.backend.livenessProbe.initialDelaySeconds }}              #10
+            periodSeconds:   {{ .Values.backend.livenessProbe.periodSeconds }}  
+                        #10
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.backend.livenessProbe.path }}                         #/health
+              port: {{ .Values.backend.containerPort }} 
+            initialDelaySeconds: {{ .Values.backend.readinessProbe.initialDelaySeconds }}              #10
+            periodSeconds:   {{ .Values.backend.readinessProbe:.periodSeconds }}              
 
       
 
