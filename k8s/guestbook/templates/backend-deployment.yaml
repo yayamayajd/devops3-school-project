@@ -15,14 +15,15 @@ spec:
     spec:
       containers:
         - name: {{ .Values.backend.name }}
-          image: {{ .Values.backend.image }}
+          image: "{{ .Values.backend.image.repository }}@sha256:{{ .Values.backend.image.digest }}"
+          imagePullPolicy: {{ .Values.backend.image.imagePullPolicy }}
           ports:
             - containerPort: {{ .Values.backend.containerPort }}
           env:
           - name: DB_HOST
             value: {{ .Values.backend.dbhost }}
           - name: DB_PORT
-            value: {{ .Values.backend.dbport }}
+            value: "{{ .Values.backend.dbport }}"
           - name: DB_USER
             value: {{ .Values.backend.dbuser }}
           - name: DB_NAME
@@ -31,7 +32,17 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: postgres-secret
-                key: POSTGRESQL_PASSWORD          
+                key: POSTGRESQL_PASSWORD    
+
+          - name: REDIS_HOST
+            value: {{ .Values.backend.redishost }}                  #redis
+          - name: REDIS_PORT
+            value: "{{ .Values.backend.redisport }}"                                # "6379"
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: redis-secret
+                key: REDIS_PASSWORD      
             
 
       

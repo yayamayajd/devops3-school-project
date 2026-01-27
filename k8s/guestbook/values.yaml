@@ -3,7 +3,10 @@ namespace: jiadai-dev
 backend:
   name: backend
   replicas: 2
-  image: ghcr.io/yayamayajd/guestbook-api@sha256:14d2a2703a9f77d49f7bb94d15e7428e574616dab4714a35f3bc14e1e695fd85
+  image: 
+    repository: ghcr.io/yayamayajd/guestbook-api
+    digest: 14d2a2703a9f77d49f7bb94d15e7428e574616dab4714a35f3bc14e1e695fd85
+    imagePullPolicy: IfNotPresent
   containerPort: 8080
 
   dbhost: "postgres"
@@ -18,11 +21,17 @@ backend:
   targetPort: 8080
   svctype: ClusterIP
 
+  redishost: redis
+  redisport: 6379
+
 
 frontend: 
   name: frontend
   replicas: 2
-  image: ghcr.io/yayamayajd/guestbook-web@sha256:345d050034913921f8d917b703549d9f262a36947a083ec6157cee512f234399
+  image: 
+    repository: ghcr.io/yayamayajd/guestbook-web
+    digest: 58e09538bb0c31c54ca8b798cfebf6dcdd073972074b6681bc9105ff0d4d0650
+    imagePullPolicy: IfNotPresent
   containerPort: 8080
   cmname: nginx-conf
   cmPath: /opt/app-root/etc/nginx.d/nginx.conf
@@ -41,13 +50,13 @@ redis:
   image: 
     repository: quay.io/kurs/redis
     tag: latest
-    pullPolicy: IfNotPresent
+    imagePullPolicy: IfNotPresent
   containerPort: 6379
   
   svcname: redis
   svcportname: redis
   svcport: 6379
-  targetPort: 6379
+  svctargetPort: 6379
   svctype: ClusterIP
 
   pvcname: redispvc
@@ -57,7 +66,6 @@ redis:
   storagename: redispvc
   mountPath: /data
 
-  password: REDIS_PASSWORD 
 
 
 postgres:

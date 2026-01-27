@@ -16,7 +16,7 @@ spec:
       containers:
         - name: {{ .Values.redis.name }}
           image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
-          imagePullpolicy: {{ .Values.redis.image.imagePullpolicy }}
+          imagePullPolicy: {{ .Values.redis.image.imagePullPolicy }}
           env:
             - name: REDIS_PASSWORD
               valueFrom:

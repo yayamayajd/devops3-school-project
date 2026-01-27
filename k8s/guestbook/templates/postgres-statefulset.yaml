@@ -30,7 +30,8 @@ spec:
                   key: POSTGRESQL_PASSWORD    #need to create a secrets in cluster
 
 
-          image: {{ .Values.postgres.image }} 
+          image: "{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
+          imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.postgres.containerPort }} 
               name: {{ .Values.postgres.name }}
