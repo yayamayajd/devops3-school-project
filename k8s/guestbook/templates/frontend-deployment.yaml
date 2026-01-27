@@ -18,11 +18,4 @@ spec:
           image: {{ .Values.frontend.image }}
           ports:
             - containerPort: {{ .Values.frontend.containerPort }}
-          volumeMounts:
-            - name: {{ .Values.frontend.cmname}}
-              mountPath: {{ .Values.frontend.cmPath}}
-              subPath: {{ .Values.frontend.cmsubPath}}
-      volumes:
-        - name: {{ .Values.frontend.cmname}}
-          configMap:
-            name: {{ .Values.frontend.name }}-config
+

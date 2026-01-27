@@ -32,11 +32,11 @@ spec:
 
           image: {{ .Values.postgres.image }} 
           ports:
-          - containerPort: {{ .Values.postgres.containerPort }} 
-            name: {{ .Values.postgres.name }}
+            - containerPort: {{ .Values.postgres.containerPort }} 
+              name: {{ .Values.postgres.name }}
           volumeMounts:
-          - name: {{ .Values.postgres.storagename }}  
-            mountPath:  {{ .Values.postgres.mountPath }}       # /var/lib/pgsql/data
+            - name: {{ .Values.postgres.storagename }}  
+              mountPath:  {{ .Values.postgres.mountPath }}       # /var/lib/pgsql/data
   volumeClaimTemplates:
   - metadata:
       name: {{ .Values.postgres.storagename }}

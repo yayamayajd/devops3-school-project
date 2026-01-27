@@ -6,14 +6,14 @@ backend:
   image: ghcr.io/yayamayajd/guestbook-api@sha256:14d2a2703a9f77d49f7bb94d15e7428e574616dab4714a35f3bc14e1e695fd85
   containerPort: 8080
 
-  dbhost: postgres
+  dbhost: "postgres"
   dbport: 5432
-  dbuser: guestbook
-  dbname: guestbook
+  dbuser: "guestbook"
+  dbname: "guestbook"
   
 
   svcname: backend
-  svcport_name: http
+  svcportname: http
   svcport: 8080
   targetPort: 8080
   svctype: ClusterIP
@@ -22,11 +22,11 @@ backend:
 frontend: 
   name: frontend
   replicas: 2
-  image: ghcr.io/yayamayajd/guestbook-web@sha256:04e7253de8a52531bd280b971b1fb8b946db2d1742bcea666a0de457b866bad1
+  image: ghcr.io/yayamayajd/guestbook-web@sha256:345d050034913921f8d917b703549d9f262a36947a083ec6157cee512f234399
   containerPort: 8080
   cmname: nginx-conf
-  cmPath: /opt/app-root/etc/nginx.d/
-  cmsubPath: server.conf
+  cmPath: /opt/app-root/etc/nginx.d/nginx.conf
+  cmsubPath: nginx.conf
 
   svcname: frontend
   svcportname: web
@@ -38,7 +38,10 @@ frontend:
 redis:
   name: redis
   replicas: 1
-  image: quay.io/kurs/redis:latest
+  image: 
+    repository: quay.io/kurs/redis
+    tag: latest
+    pullPolicy: IfNotPresent
   containerPort: 6379
   
   svcname: redis
@@ -54,10 +57,15 @@ redis:
   storagename: redispvc
   mountPath: /data
 
+  password: REDIS_PASSWORD 
+
 
 postgres:
   name: postgres
-  image: quay.io/fedora/postgresql-16:latest
+  image: 
+    repository: quay.io/fedora/postgresql-16
+    tag: latest
+    pullPolicy: IfNotPresent
   replicas: 1
   containerPort: 5432
   minReadySeconds: 10
@@ -65,7 +73,7 @@ postgres:
   mountPath: /var/lib/pgsql/data
   storagename: postgres-storage
   accessModes: "ReadWriteOnce"
-  storageClassName: gp3
+  storageClassName: "gp3"
   storageSize: 1Gi
 
   user: guestbook

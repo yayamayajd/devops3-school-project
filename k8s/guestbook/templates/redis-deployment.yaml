@@ -15,7 +15,15 @@ spec:
     spec:
       containers:
         - name: {{ .Values.redis.name }}
-          image: {{ .Values.redis.image }}
+          image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+          imagePullpolicy: {{ .Values.redis.image.imagePullpolicy }}
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secret
+                  key: REDIS_PASSWORD              
+
           ports:
             - containerPort: {{ .Values.redis.containerPort }}
           volumeMounts:
